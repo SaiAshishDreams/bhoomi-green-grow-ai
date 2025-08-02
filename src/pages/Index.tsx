@@ -2,6 +2,10 @@ import { useState } from "react";
 import Welcome from "@/components/Welcome";
 import Navigation from "@/components/Navigation";
 import Dashboard from "@/components/Dashboard";
+import AICropPlanning from "@/components/AICropPlanning";
+import RemoteMonitoring from "@/components/RemoteMonitoring";
+import SmartIrrigation from "@/components/SmartIrrigation";
+import FarmAnalytics from "@/components/FarmAnalytics";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -24,33 +28,13 @@ const Index = () => {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigate} />;
       case 'ai-planner':
-        return (
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4">AI Crop Planner</h1>
-            <p className="text-muted-foreground">Coming soon - AI-powered crop recommendations</p>
-          </div>
-        );
+        return <AICropPlanning />;
       case 'timeline':
-        return (
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4">Farm Activity Timeline</h1>
-            <p className="text-muted-foreground">Coming soon - Calendar view of farm activities</p>
-          </div>
-        );
+        return <SmartIrrigation />;
       case 'control':
-        return (
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4">Control Panel</h1>
-            <p className="text-muted-foreground">Coming soon - IoT device controls</p>
-          </div>
-        );
+        return <RemoteMonitoring />;
       case 'reports':
-        return (
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4">Farm Reports</h1>
-            <p className="text-muted-foreground">Coming soon - Analytics and insights</p>
-          </div>
-        );
+        return <FarmAnalytics />;
       case 'farmer-connect':
         return (
           <div className="p-6">
