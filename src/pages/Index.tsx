@@ -6,6 +6,9 @@ import AICropPlanning from "@/components/AICropPlanning";
 import RemoteMonitoring from "@/components/RemoteMonitoring";
 import SmartIrrigation from "@/components/SmartIrrigation";
 import FarmAnalytics from "@/components/FarmAnalytics";
+import UserProfile from "@/components/UserProfile";
+import FarmManager from "@/components/FarmManager";
+import NotificationSettings from "@/components/NotificationSettings";
 
 const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -32,10 +35,10 @@ const Index = () => {
     switch (currentSection) {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigate} />;
+      case 'farms':
+        return <FarmManager />;
       case 'ai-planner':
         return <AICropPlanning />;
-      case 'timeline':
-        return <SmartIrrigation />;
       case 'control':
         return <RemoteMonitoring />;
       case 'reports':
@@ -54,6 +57,8 @@ const Index = () => {
             <p className="text-muted-foreground">Coming soon - Sell your harvest</p>
           </div>
         );
+      case 'profile':
+        return <UserProfile />;
       default:
         return <Dashboard onNavigate={handleNavigate} />;
     }
