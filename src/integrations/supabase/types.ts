@@ -14,7 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      farms: {
+        Row: {
+          created_at: string
+          crop_types: string[] | null
+          id: string
+          location: string | null
+          name: string
+          size_acres: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          crop_types?: string[] | null
+          id?: string
+          location?: string | null
+          name: string
+          size_acres?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          crop_types?: string[] | null
+          id?: string
+          location?: string | null
+          name?: string
+          size_acres?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notification_preferences: {
+        Row: {
+          created_at: string
+          crop_health_alerts: boolean | null
+          email_notifications: boolean | null
+          id: string
+          irrigation_alerts: boolean | null
+          sms_notifications: boolean | null
+          updated_at: string
+          user_id: string
+          weather_alerts: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          crop_health_alerts?: boolean | null
+          email_notifications?: boolean | null
+          id?: string
+          irrigation_alerts?: boolean | null
+          sms_notifications?: boolean | null
+          updated_at?: string
+          user_id: string
+          weather_alerts?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          crop_health_alerts?: boolean | null
+          email_notifications?: boolean | null
+          id?: string
+          irrigation_alerts?: boolean | null
+          sms_notifications?: boolean | null
+          updated_at?: string
+          user_id?: string
+          weather_alerts?: boolean | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          location: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
