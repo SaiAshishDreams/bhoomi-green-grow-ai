@@ -19,6 +19,11 @@ const Index = () => {
     setCurrentSection(section);
   };
 
+  const handleGoHome = () => {
+    setShowWelcome(true);
+    setCurrentSection('dashboard');
+  };
+
   if (showWelcome) {
     return <Welcome onGetStarted={handleGetStarted} />;
   }
@@ -56,8 +61,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation currentSection={currentSection} onNavigate={handleNavigate} />
-      <main className="lg:ml-0">
+      <Navigation 
+        currentSection={currentSection} 
+        onNavigate={handleNavigate}
+        onGoHome={handleGoHome}
+      />
+      <main className="lg:ml-64 pt-16 lg:pt-0">
         {renderSection()}
       </main>
     </div>

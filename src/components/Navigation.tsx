@@ -16,6 +16,7 @@ import bhoomeLogo from "@/assets/bhoomi-logo.png";
 interface NavigationProps {
   currentSection: string;
   onNavigate: (section: string) => void;
+  onGoHome?: () => void;
 }
 
 const navItems = [
@@ -28,7 +29,7 @@ const navItems = [
   { id: 'marketplace', label: 'Marketplace', icon: ShoppingCart },
 ];
 
-export default function Navigation({ currentSection, onNavigate }: NavigationProps) {
+export default function Navigation({ currentSection, onNavigate, onGoHome }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -38,7 +39,10 @@ export default function Navigation({ currentSection, onNavigate }: NavigationPro
         <div className="flex flex-col w-full">
           {/* Logo */}
           <div className="p-6 border-b border-border">
-            <div className="flex items-center gap-3">
+            <div 
+              className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={onGoHome}
+            >
               <img src={bhoomeLogo} alt="Bhoomi" className="w-8 h-8" />
               <h1 className="text-xl font-bold text-foreground">Bhoomi</h1>
             </div>
@@ -65,7 +69,10 @@ export default function Navigation({ currentSection, onNavigate }: NavigationPro
       <div className="lg:hidden">
         {/* Mobile Header */}
         <header className="fixed top-0 left-0 right-0 h-16 bg-card border-b border-border shadow-earth z-50 flex items-center justify-between px-4">
-          <div className="flex items-center gap-3">
+          <div 
+            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={onGoHome}
+          >
             <img src={bhoomeLogo} alt="Bhoomi" className="w-8 h-8" />
             <h1 className="text-xl font-bold text-foreground">Bhoomi</h1>
           </div>
