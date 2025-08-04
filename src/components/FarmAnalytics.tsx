@@ -1,11 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, TrendingUp, Mail, MapPin, PieChart, AlertTriangle, ArrowRight, Target } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
+import { BarChart3, TrendingUp, Mail, MapPin, PieChart, AlertTriangle, ArrowRight, Target, Info } from "lucide-react";
 
 export default function FarmAnalytics() {
+  const { user } = useAuth();
+  
   return (
     <div className="min-h-screen bg-background">
+      {/* Demo Notice */}
+      {!user && (
+        <div className="p-6">
+          <Alert className="border-primary/20 bg-primary/5">
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              You're viewing demo farm analytics. <Button variant="link" className="p-0 h-auto font-semibold" onClick={() => window.location.href = '/auth'}>
+                Login to see your actual farm data and insights
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
       {/* Hero Banner */}
       <section className="bg-gradient-harvest relative overflow-hidden py-16 px-6">
         <div className="absolute inset-0 opacity-10">
@@ -21,13 +38,15 @@ export default function FarmAnalytics() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
-            Know Your Farm,<br />
+            {user ? 'Know Your Farm,' : 'Demo: Know Farms,'}<br />
             <span className="text-accent-foreground">Grow Better</span>
           </h1>
           
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
-            All your farm data in one place: insights, trends, and predictions. 
-            Track crop health, yields, and profitability with detailed reports.
+            {user 
+              ? 'All your farm data in one place: insights, trends, and predictions. Track crop health, yields, and profitability with detailed reports.'
+              : 'See how Bhoomi would present your farm data with comprehensive analytics, insights, and automated reports.'
+            }
           </p>
           
           <Button variant="secondary" size="lg" className="animate-gentle-bounce">

@@ -24,24 +24,21 @@ interface NavigationProps {
 }
 
 const navItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: Home },
-  { id: 'farms', label: 'My Farms', icon: Calendar },
-  { id: 'ai-planner', label: 'AI Planner', icon: Brain },
-  { id: 'control', label: 'Control Panel', icon: Settings },
-  { id: 'reports', label: 'Reports', icon: FileText },
-  { id: 'farmer-connect', label: 'Connect', icon: MessageCircle },
-  { id: 'marketplace', label: 'Marketplace', icon: ShoppingCart },
-  { id: 'profile', label: 'Profile', icon: User },
+  { id: 'dashboard', label: 'Dashboard', icon: Home, public: true },
+  { id: 'farms', label: 'My Farms', icon: Calendar, public: false },
+  { id: 'ai-planner', label: 'AI Planner', icon: Brain, public: true },
+  { id: 'control', label: 'Control Panel', icon: Settings, public: true },
+  { id: 'reports', label: 'Reports', icon: FileText, public: true },
+  { id: 'farmer-connect', label: 'Connect', icon: MessageCircle, public: true },
+  { id: 'marketplace', label: 'Marketplace', icon: ShoppingCart, public: true },
+  { id: 'profile', label: 'Profile', icon: User, public: false },
 ];
 
 export default function Navigation({ currentSection, onNavigate, onGoHome }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user } = useAuth();
 
-  // Only show navigation if user is authenticated
-  if (!user) {
-    return null;
-  }
+  // Always show navigation, but hide some items for non-authenticated users
 
   return (
     <>
@@ -61,22 +58,34 @@ export default function Navigation({ currentSection, onNavigate, onGoHome }: Nav
 
           {/* Navigation Items */}
           <div className="flex-1 p-4 space-y-2">
-            {navItems.map((item) => (
-              <Button
-                key={item.id}
-                variant={currentSection === item.id ? "forest" : "ghost"}
-                className="w-full justify-start"
-                onClick={() => onNavigate(item.id)}
-              >
-                <item.icon className="mr-3 h-4 w-4" />
-                {item.label}
-              </Button>
-            ))}
+            {navItems
+              .filter(item => item.public || user)
+              .map((item) => (
+                <Button
+                  key={item.id}
+                  variant={currentSection === item.id ? "forest" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => onNavigate(item.id)}
+                >
+                  <item.icon className="mr-3 h-4 w-4" />
+                  {item.label}
+                </Button>
+              ))}
           </div>
 
           {/* User Menu */}
           <div className="p-4 border-t border-border">
-            <AuthButton onNavigate={onNavigate} />
+            {user ? (
+              <AuthButton onNavigate={onNavigate} />
+            ) : (
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => window.location.href = '/auth'}
+              >
+                Login
+              </Button>
+            )}
           </div>
         </div>
       </nav>
@@ -111,20 +120,22 @@ export default function Navigation({ currentSection, onNavigate, onGoHome }: Nav
             <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
             <div className="fixed top-16 left-0 right-0 bg-card border-b border-border shadow-forest animate-slide-up">
               <div className="p-4 space-y-2">
-                {navItems.map((item) => (
-                  <Button
-                    key={item.id}
-                    variant={currentSection === item.id ? "forest" : "ghost"}
-                    className="w-full justify-start"
-                    onClick={() => {
-                      onNavigate(item.id);
-                      setIsMobileMenuOpen(false);
-                    }}
-                  >
-                    <item.icon className="mr-3 h-4 w-4" />
-                    {item.label}
-                  </Button>
-                ))}
+                {navItems
+                  .filter(item => item.public || user)
+                  .map((item) => (
+                    <Button
+                      key={item.id}
+                      variant={currentSection === item.id ? "forest" : "ghost"}
+                      className="w-full justify-start"
+                      onClick={() => {
+                        onNavigate(item.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      <item.icon className="mr-3 h-4 w-4" />
+                      {item.label}
+                    </Button>
+                  ))}
               </div>
             </div>
           </div>

@@ -17,13 +17,23 @@ const Index = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [currentSection, setCurrentSection] = useState('dashboard');
 
-  // Check URL params for authentication redirect
+  // Check URL params for authentication redirect and show welcome toast
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('authenticated') === 'true' && user) {
       setShowWelcome(false);
       // Clean up URL
       window.history.replaceState({}, document.title, '/');
+      
+      // Show welcome toast after a brief delay to ensure the page is loaded
+      setTimeout(() => {
+        import("@/hooks/use-toast").then(({ toast }) => {
+          toast({
+            title: "Welcome back!",
+            description: "Your farm data is now visible.",
+          });
+        });
+      }, 500);
     }
   }, [user]);
 
@@ -54,8 +64,8 @@ const Index = () => {
     );
   }
 
-  // Show welcome page if user is not authenticated or explicitly wants to see it
-  if (showWelcome || !user) {
+  // Show welcome page only if explicitly requested
+  if (showWelcome) {
     return (
       <div className="min-h-screen bg-background">
         <GlobalHeader onGoHome={handleGoHome} />

@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   Thermometer, 
   Droplets, 
@@ -11,7 +13,8 @@ import {
   Zap,
   MessageCircle,
   TrendingUp,
-  AlertTriangle
+  AlertTriangle,
+  Info
 } from "lucide-react";
 
 interface DashboardProps {
@@ -19,6 +22,8 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ onNavigate }: DashboardProps) {
+  const { user } = useAuth();
+  
   const weatherData = {
     temperature: "28°C",
     humidity: "65%",
@@ -26,17 +31,26 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
     windSpeed: "8 km/h"
   };
 
-  const farmStats = [
+  const farmStats = user ? [
     { label: "Soil Moisture", value: "72%", status: "good", icon: Droplets },
     { label: "Crop Health", value: "85%", status: "excellent", icon: Sprout },
     { label: "Temperature", value: "28°C", status: "optimal", icon: Thermometer },
     { label: "Growth Stage", value: "Flowering", status: "normal", icon: TrendingUp }
+  ] : [
+    { label: "Demo Soil Moisture", value: "68%", status: "good", icon: Droplets },
+    { label: "Demo Crop Health", value: "82%", status: "excellent", icon: Sprout },
+    { label: "Demo Temperature", value: "26°C", status: "optimal", icon: Thermometer },
+    { label: "Demo Growth Stage", value: "Seedling", status: "normal", icon: TrendingUp }
   ];
 
-  const alerts = [
+  const alerts = user ? [
     { type: "warning", message: "Pest detected in Field A - Tomatoes", time: "2 hours ago" },
     { type: "info", message: "Irrigation scheduled for tomorrow morning", time: "4 hours ago" },
     { type: "success", message: "Harvest ready in Field C - Wheat", time: "1 day ago" }
+  ] : [
+    { type: "info", message: "Demo: Smart irrigation system active", time: "Demo data" },
+    { type: "success", message: "Demo: Optimal growing conditions detected", time: "Demo data" },
+    { type: "warning", message: "Demo: Weather alert - rain expected", time: "Demo data" }
   ];
 
   const getStatusColor = (status: string) => {
@@ -64,8 +78,12 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Farm Dashboard</h1>
-            <p className="text-muted-foreground">Overview of your agricultural operations</p>
+            <h1 className="text-3xl font-bold text-foreground">
+              {user ? 'Farm Dashboard' : 'Demo Dashboard'}
+            </h1>
+            <p className="text-muted-foreground">
+              {user ? 'Overview of your agricultural operations' : 'Experience Bhoomi\'s smart farming capabilities'}
+            </p>
           </div>
           
           <div className="flex gap-3">
@@ -75,10 +93,22 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
             </Button>
             <Button variant="outline" onClick={() => onNavigate('farmer-connect')}>
               <MessageCircle className="mr-2" />
-              Contact Farmer
+              {user ? 'Contact Farmer' : 'Demo Connect'}
             </Button>
           </div>
         </div>
+
+        {/* Demo Notice */}
+        {!user && (
+          <Alert className="border-primary/20 bg-primary/5">
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              You're viewing demo data. <Button variant="link" className="p-0 h-auto font-semibold" onClick={() => window.location.href = '/auth'}>
+                Login to see your real farm data
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
 
         {/* Weather Card */}
         <Card className="shadow-earth animate-fade-in">
@@ -146,8 +176,12 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
               <div className="aspect-video bg-gradient-earth rounded-lg flex items-center justify-center">
                 <div className="text-center">
                   <Camera className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-lg font-semibold text-foreground mb-2">Camera Feed</p>
-                  <p className="text-sm text-muted-foreground">Field A - Tomato Plantation</p>
+                  <p className="text-lg font-semibold text-foreground mb-2">
+                    {user ? 'Camera Feed' : 'Demo Camera Feed'}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {user ? 'Field A - Tomato Plantation' : 'Demo Field - Sample Crops'}
+                  </p>
                   <Button variant="outline" className="mt-4" onClick={() => onNavigate('control')}>
                     View All Cameras
                   </Button>

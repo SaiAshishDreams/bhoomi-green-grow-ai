@@ -1,11 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Camera, Smartphone, Thermometer, Droplets, Bell, Eye, ArrowRight, Play, Quote } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
+import { Camera, Smartphone, Thermometer, Droplets, Bell, Eye, ArrowRight, Play, Quote, Info } from "lucide-react";
 
 export default function RemoteMonitoring() {
+  const { user } = useAuth();
+  
   return (
     <div className="min-h-screen bg-background">
+      {/* Demo Notice */}
+      {!user && (
+        <div className="p-6">
+          <Alert className="border-primary/20 bg-primary/5">
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              You're viewing demo monitoring capabilities. <Button variant="link" className="p-0 h-auto font-semibold" onClick={() => window.location.href = '/auth'}>
+                Login to see your real farm monitoring system
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
       {/* Hero Banner */}
       <section className="bg-gradient-sky relative overflow-hidden py-16 px-6">
         <div className="absolute inset-0 opacity-10">
@@ -21,13 +38,15 @@ export default function RemoteMonitoring() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
-            See Your Farm<br />
+            {user ? 'See Your Farm' : 'Demo: See Farms'}<br />
             <span className="text-accent-foreground">from Anywhere</span>
           </h1>
           
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
-            Live drone and CCTV feeds, soil and climate stats at your fingertips. 
-            Monitor your farm 24/7 with real-time data and instant alerts.
+            {user 
+              ? 'Live drone and CCTV feeds, soil and climate stats at your fingertips. Monitor your farm 24/7 with real-time data and instant alerts.'
+              : 'Experience how Bhoomi\'s monitoring system would let you watch your farm remotely with live feeds and sensor data.'
+            }
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

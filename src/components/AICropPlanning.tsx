@@ -1,11 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brain, MapPin, Calendar, TrendingUp, Droplets, Star, ArrowRight } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
+import { Brain, MapPin, Calendar, TrendingUp, Droplets, Star, ArrowRight, Info } from "lucide-react";
 
 export default function AICropPlanning() {
+  const { user } = useAuth();
+  
   return (
     <div className="min-h-screen bg-background">
+      {/* Demo Notice */}
+      {!user && (
+        <div className="p-6">
+          <Alert className="border-primary/20 bg-primary/5">
+            <Info className="h-4 w-4" />
+            <AlertDescription>
+              You're viewing demo AI crop planning. <Button variant="link" className="p-0 h-auto font-semibold" onClick={() => window.location.href = '/auth'}>
+                Login to get personalized crop recommendations for your farm
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
       {/* Hero Banner */}
       <section className="bg-gradient-forest relative overflow-hidden py-16 px-6">
         <div className="absolute inset-0 opacity-10">
@@ -21,17 +38,24 @@ export default function AICropPlanning() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
-            AI-Powered Crop<br />
+            {user ? 'AI-Powered Crop' : 'Demo AI Crop'}<br />
             <span className="text-accent-foreground">Recommendations</span>
           </h1>
           
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
-            Plan the right crop at the right time with Bhoomi. Get personalized recommendations 
-            based on your location, soil conditions, and market trends.
+            {user 
+              ? 'Plan the right crop at the right time with Bhoomi. Get personalized recommendations based on your location, soil conditions, and market trends.'
+              : 'Experience how Bhoomi\'s AI would recommend crops for your specific farm location and conditions.'
+            }
           </p>
           
-          <Button variant="secondary" size="lg" className="animate-gentle-bounce">
-            Try the Crop Planner Now <ArrowRight className="ml-2" />
+          <Button 
+            variant="secondary" 
+            size="lg" 
+            className="animate-gentle-bounce"
+            onClick={() => user ? null : window.location.href = '/auth'}
+          >
+            {user ? 'Try the Crop Planner Now' : 'Login for Personalized Recommendations'} <ArrowRight className="ml-2" />
           </Button>
         </div>
       </section>
