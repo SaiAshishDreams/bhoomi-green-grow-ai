@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import Welcome from "@/components/Welcome";
 import Navigation from "@/components/Navigation";
+import GlobalHeader from "@/components/GlobalHeader";
 import Dashboard from "@/components/Dashboard";
 import AICropPlanning from "@/components/AICropPlanning";
 import RemoteMonitoring from "@/components/RemoteMonitoring";
@@ -11,11 +13,28 @@ import FarmManager from "@/components/FarmManager";
 import NotificationSettings from "@/components/NotificationSettings";
 
 const Index = () => {
+  const { user, loading } = useAuth();
   const [showWelcome, setShowWelcome] = useState(true);
   const [currentSection, setCurrentSection] = useState('dashboard');
 
+  // Check URL params for authentication redirect
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('authenticated') === 'true' && user) {
+      setShowWelcome(false);
+      // Clean up URL
+      window.history.replaceState({}, document.title, '/');
+    }
+  }, [user]);
+
   const handleGetStarted = () => {
-    setShowWelcome(false);
+    if (user) {
+      // User is logged in, show personalized dashboard
+      setShowWelcome(false);
+    } else {
+      // User is not logged in, redirect to auth
+      window.location.href = '/auth';
+    }
   };
 
   const handleNavigate = (section: string) => {
@@ -27,8 +46,24 @@ const Index = () => {
     setCurrentSection('dashboard');
   };
 
-  if (showWelcome) {
-    return <Welcome onGetStarted={handleGetStarted} />;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-lg text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show welcome page if user is not authenticated or explicitly wants to see it
+  if (showWelcome || !user) {
+    return (
+      <div className="min-h-screen bg-background">
+        <GlobalHeader onGoHome={handleGoHome} />
+        <div className="pt-16">
+          <Welcome onGetStarted={handleGetStarted} />
+        </div>
+      </div>
+    );
   }
 
   const renderSection = () => {

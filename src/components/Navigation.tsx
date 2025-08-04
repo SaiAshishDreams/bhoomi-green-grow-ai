@@ -14,15 +14,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "@/hooks/use-toast";
+import AuthButton from "@/components/AuthButton";
 import bhoomeLogo from "@/assets/bhoomi-logo.png";
 
 interface NavigationProps {
@@ -44,68 +36,12 @@ const navItems = [
 
 export default function Navigation({ currentSection, onNavigate, onGoHome }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
-  const handleSignOut = async () => {
-    try {
-      const { error } = await signOut();
-      if (error) {
-        toast({
-          title: "Error signing out",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Signed out",
-          description: "You have been successfully signed out.",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const UserMenu = () => (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-10 w-10 rounded-full p-0">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.user_metadata?.avatar_url} />
-            <AvatarFallback className="bg-primary/10 text-primary text-sm">
-              {user?.user_metadata?.full_name ? 
-                user.user_metadata.full_name.charAt(0).toUpperCase() : 
-                user?.email?.charAt(0).toUpperCase() || 'U'}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <div className="flex items-center justify-start gap-2 p-2">
-          <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">{user?.user_metadata?.full_name || 'User'}</p>
-            <p className="w-[200px] truncate text-sm text-muted-foreground">
-              {user?.email}
-            </p>
-          </div>
-        </div>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => onNavigate('profile')}>
-          <User className="mr-2 h-4 w-4" />
-          Profile
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignOut}>
-          <LogOut className="mr-2 h-4 w-4" />
-          Sign out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
+  // Only show navigation if user is authenticated
+  if (!user) {
+    return null;
+  }
 
   return (
     <>
@@ -140,34 +76,7 @@ export default function Navigation({ currentSection, onNavigate, onGoHome }: Nav
 
           {/* User Menu */}
           <div className="p-4 border-t border-border">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={user?.user_metadata?.avatar_url} />
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm">
-                    {user?.user_metadata?.full_name ? 
-                      user.user_metadata.full_name.charAt(0).toUpperCase() : 
-                      user?.email?.charAt(0).toUpperCase() || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col min-w-0 flex-1">
-                  <p className="text-sm font-medium truncate">
-                    {user?.user_metadata?.full_name || 'User'}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {user?.email}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleSignOut}
-                className="h-8 w-8"
-              >
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
+            <AuthButton onNavigate={onNavigate} />
           </div>
         </div>
       </nav>
@@ -185,7 +94,7 @@ export default function Navigation({ currentSection, onNavigate, onGoHome }: Nav
           </div>
           
           <div className="flex items-center gap-2">
-            <UserMenu />
+            <AuthButton onNavigate={onNavigate} />
             <Button
               variant="ghost"
               size="icon"

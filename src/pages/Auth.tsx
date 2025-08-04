@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import GlobalHeader from '@/components/GlobalHeader';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,10 +24,11 @@ const Auth = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (user) {
-      navigate('/');
+    if (user && !loading) {
+      // Redirect to dashboard after successful authentication
+      window.location.href = '/?authenticated=true';
     }
-  }, [user, navigate]);
+  }, [user, loading]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,8 +133,10 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-sky p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-sky">
+      <GlobalHeader />
+      <div className="flex items-center justify-center p-4 pt-20">
+        <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-primary mb-2">Bhoomi</h1>
           <p className="text-muted-foreground">Smart farming for sustainable agriculture</p>
@@ -261,6 +265,7 @@ const Auth = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );
