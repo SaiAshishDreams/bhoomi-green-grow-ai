@@ -38,13 +38,9 @@ const Index = () => {
   }, [user]);
 
   const handleGetStarted = () => {
-    if (user) {
-      // User is logged in, show personalized dashboard
-      setShowWelcome(false);
-    } else {
-      // User is not logged in, redirect to auth
-      window.location.href = '/auth';
-    }
+    // Always show the dashboard, regardless of login status
+    // Public users see demo content, logged-in users see personalized data
+    setShowWelcome(false);
   };
 
   const handleNavigate = (section: string) => {
