@@ -1,12 +1,98 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/contexts/AuthContext";
-import { Brain, MapPin, Calendar, TrendingUp, Droplets, Star, ArrowRight, Info } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Brain, MapPin, Calendar, TrendingUp, Droplets, Star, ArrowRight, Info, Sprout, Target, Clock } from "lucide-react";
+
+interface Farm {
+  id: string;
+  name: string;
+  location: string;
+  size_acres: number;
+  crop_types: string[];
+}
+
+interface AIPlan {
+  farmId: string;
+  farmName: string;
+  recommendations: {
+    crop: string;
+    expectedYield: string;
+    profitabilityIndex: number;
+    waterNeeds: string;
+    sowingWindow: string;
+    harvestWindow: string;
+  }[];
+}
 
 export default function AICropPlanning() {
   const { user } = useAuth();
+  const [userFarms, setUserFarms] = useState<Farm[]>([]);
+  const [aiPlans, setAiPlans] = useState<AIPlan[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      fetchUserFarms();
+    }
+  }, [user]);
+
+  const fetchUserFarms = async () => {
+    setLoading(true);
+    try {
+      const { data: farms, error } = await supabase
+        .from('farms')
+        .select('*')
+        .eq('user_id', user?.id);
+      
+      if (error) throw error;
+      
+      setUserFarms(farms || []);
+      generateAIPlans(farms || []);
+    } catch (error) {
+      console.error('Error fetching farms:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const generateAIPlans = (farms: Farm[]) => {
+    // Simulate AI-generated crop plans based on farm data
+    const plans: AIPlan[] = farms.map(farm => ({
+      farmId: farm.id,
+      farmName: farm.name,
+      recommendations: [
+        {
+          crop: 'Toor Dal',
+          expectedYield: '12-15 quintal/acre',
+          profitabilityIndex: 85,
+          waterNeeds: 'Moderate (400-500mm)',
+          sowingWindow: 'June 15 - July 15',
+          harvestWindow: 'January - February'
+        },
+        {
+          crop: 'Jowar (Sorghum)',
+          expectedYield: '18-22 quintal/acre',
+          profitabilityIndex: 78,
+          waterNeeds: 'Low (300-400mm)',
+          sowingWindow: 'June 1 - July 1',
+          harvestWindow: 'October - November'
+        },
+        {
+          crop: 'Moong',
+          expectedYield: '8-12 quintal/acre',
+          profitabilityIndex: 92,
+          waterNeeds: 'Low (250-350mm)',
+          sowingWindow: 'July 1 - July 31',
+          harvestWindow: 'September - October'
+        }
+      ]
+    }));
+    setAiPlans(plans);
+  };
   
   return (
     <div className="min-h-screen bg-background">
@@ -110,109 +196,198 @@ export default function AICropPlanning() {
         </div>
       </section>
 
-      {/* Sample Output */}
-      <section className="py-16 px-6 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-4">
-            Sample AI Recommendations
-          </h2>
-          <p className="text-center text-muted-foreground mb-12">
-            Here's what you can expect from our AI crop planner
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-foreground">🍅 Tomato</h3>
-                  <Badge variant="secondary" className="bg-green-100 text-green-800">
-                    High ROI
-                  </Badge>
-                </div>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Growth: 90-120 days</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Sowing: June-July</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐⭐</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Droplets className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Care Level: Medium</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+      {/* User Farms & AI Plans or Demo */}
+      {user ? (
+        <section className="py-16 px-6 bg-muted/30">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              AI Crop Recommendations for Your Farms
+            </h2>
             
-            <Card className="hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-foreground">🌼 Marigold</h3>
-                  <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                    Fast Growth
-                  </Badge>
-                </div>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Growth: 45-60 days</span>
+            {loading ? (
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <p className="text-muted-foreground mt-4">Loading your farm data...</p>
+              </div>
+            ) : userFarms.length === 0 ? (
+              <div className="text-center">
+                <Sprout className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-2">No Farms Found</h3>
+                <p className="text-muted-foreground mb-6">Add your first farm to get AI crop recommendations</p>
+                <Button variant="outline" onClick={() => window.location.href = '/'}>
+                  Add Farm
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-12">
+                {aiPlans.map((plan) => (
+                  <div key={plan.farmId} className="space-y-6">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center gap-2 bg-primary/10 rounded-lg px-4 py-2">
+                        <MapPin className="w-5 h-5 text-primary" />
+                        <span className="font-semibold text-foreground">{plan.farmName}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-6">
+                      {plan.recommendations.map((rec, index) => (
+                        <Card key={index} className="hover:shadow-forest transition-all duration-300">
+                          <CardContent className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <h3 className="text-lg font-semibold text-foreground">{rec.crop}</h3>
+                              <Badge 
+                                variant="secondary" 
+                                className={`${
+                                  rec.profitabilityIndex >= 90 ? 'bg-green-100 text-green-800' :
+                                  rec.profitabilityIndex >= 80 ? 'bg-yellow-100 text-yellow-800' :
+                                  'bg-blue-100 text-blue-800'
+                                }`}
+                              >
+                                {rec.profitabilityIndex}% ROI
+                              </Badge>
+                            </div>
+                            
+                            <div className="space-y-3 text-sm">
+                              <div className="flex items-center gap-2">
+                                <Target className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">Yield: {rec.expectedYield}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Droplets className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">{rec.waterNeeds}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Clock className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">Sow: {rec.sowingWindow}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">Harvest: {rec.harvestWindow}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex gap-2 mt-4">
+                              <Button variant="outline" size="sm" className="flex-1">
+                                Accept Plan
+                              </Button>
+                              <Button variant="outline" size="sm" className="flex-1">
+                                Customize
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Sowing: Year-round</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Droplets className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Care Level: Low</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-foreground">🥜 Groundnut</h3>
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                    Stable Market
-                  </Badge>
-                </div>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Growth: 120-140 days</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Sowing: May-June</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Droplets className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Care Level: Low</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="py-16 px-6 bg-muted/30">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-4">
+              Sample AI Recommendations
+            </h2>
+            <p className="text-center text-muted-foreground mb-12">
+              Here's what you can expect from our AI crop planner
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-foreground">🍅 Tomato</h3>
+                    <Badge variant="secondary" className="bg-green-100 text-green-800">
+                      High ROI
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Growth: 90-120 days</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Sowing: June-July</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Droplets className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Care Level: Medium</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-foreground">🌼 Marigold</h3>
+                    <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+                      Fast Growth
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Growth: 45-60 days</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Sowing: Year-round</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Droplets className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Care Level: Low</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-foreground">🥜 Groundnut</h3>
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                      Stable Market
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Growth: 120-140 days</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Sowing: May-June</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Profitability: ⭐⭐⭐⭐</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Droplets className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-muted-foreground">Care Level: Low</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Benefits */}
       <section className="py-16 px-6">

@@ -10,6 +10,7 @@ import SmartIrrigation from "@/components/SmartIrrigation";
 import FarmAnalytics from "@/components/FarmAnalytics";
 import UserProfile from "@/components/UserProfile";
 import FarmManager from "@/components/FarmManager";
+import FarmerConnect from "@/components/FarmerConnect";
 import NotificationSettings from "@/components/NotificationSettings";
 
 const Index = () => {
@@ -85,12 +86,7 @@ const Index = () => {
       case 'reports':
         return <FarmAnalytics />;
       case 'farmer-connect':
-        return (
-          <div className="p-6">
-            <h1 className="text-3xl font-bold text-foreground mb-4">Farmer Connect</h1>
-            <p className="text-muted-foreground">Coming soon - Chat and call features</p>
-          </div>
-        );
+        return <FarmerConnect />;
       case 'marketplace':
         return (
           <div className="p-6">
