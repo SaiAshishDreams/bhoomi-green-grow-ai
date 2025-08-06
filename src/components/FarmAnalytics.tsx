@@ -55,64 +55,66 @@ export default function FarmAnalytics() {
         </div>
       </section>
 
-      {/* What You Get */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            Comprehensive Farm Intelligence
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-forest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Target className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Crop Health Index</h3>
-                <p className="text-sm text-muted-foreground">
-                  Real-time monitoring of plant health, disease risk, and growth patterns
-                </p>
-              </CardContent>
-            </Card>
+      {/* What You Get - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              Comprehensive Farm Intelligence
+            </h2>
             
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-earth rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <TrendingUp className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Yield Prediction</h3>
-                <p className="text-sm text-muted-foreground">
-                  AI-powered forecasts based on growth trends and historical data
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-sky rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <PieChart className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Cost Analysis</h3>
-                <p className="text-sm text-muted-foreground">
-                  Detailed expense vs income charts with profitability insights
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-harvest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Mail className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Weekly Reports</h3>
-                <p className="text-sm text-muted-foreground">
-                  Automated reports delivered via email or mobile app
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-forest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Target className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Crop Health Index</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Real-time monitoring of plant health, disease risk, and growth patterns
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-earth rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <TrendingUp className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Yield Prediction</h3>
+                  <p className="text-sm text-muted-foreground">
+                    AI-powered forecasts based on growth trends and historical data
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-sky rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <PieChart className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Cost Analysis</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Detailed expense vs income charts with profitability insights
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-harvest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Mail className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Weekly Reports</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Automated reports delivered via email or mobile app
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Sample Reports */}
       <section className="py-16 px-6 bg-muted/30">
@@ -348,28 +350,30 @@ export default function FarmAnalytics() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 px-6 bg-gradient-harvest">
-        <Card className="max-w-4xl mx-auto shadow-glow">
-          <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              See Your Farm Analytics in Action
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Transform your farming with data-driven insights. Make smarter decisions, 
-              increase yields, and boost profitability with Bhoomi Analytics.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="forest" size="lg">
-                Get Analytics Dashboard
-              </Button>
-              <Button variant="outline" size="lg">
-                See Sample Reports
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      {/* CTA - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6 bg-gradient-harvest">
+          <Card className="max-w-4xl mx-auto shadow-glow">
+            <CardContent className="p-8 text-center">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                See Your Farm Analytics in Action
+              </h3>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Transform your farming with data-driven insights. Make smarter decisions, 
+                increase yields, and boost profitability with Bhoomi Analytics.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button variant="forest" size="lg">
+                  Get Analytics Dashboard
+                </Button>
+                <Button variant="outline" size="lg">
+                  See Sample Reports
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </div>
   );
 }

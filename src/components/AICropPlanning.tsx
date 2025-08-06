@@ -146,55 +146,57 @@ export default function AICropPlanning() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            How Our AI Works for You
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-earth rounded-2xl flex items-center justify-center">
-                  <MapPin className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Input Your Data</h3>
-                <p className="text-muted-foreground">
-                  Share your location, farm size, and crop preferences (optional) 
-                  for personalized recommendations.
-                </p>
-              </CardContent>
-            </Card>
+      {/* How It Works - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              How Our AI Works for You
+            </h2>
             
-            <Card className="text-center hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-forest rounded-2xl flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">AI Analysis</h3>
-                <p className="text-muted-foreground">
-                  Our AI analyzes soil type, weather forecasts, seasonal patterns, 
-                  and historical crop performance data.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-sky rounded-2xl flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Smart Recommendations</h3>
-                <p className="text-muted-foreground">
-                  Receive top 3 crop recommendations with ROI predictions, 
-                  water requirements, and timing guidance.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="text-center hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-earth rounded-2xl flex items-center justify-center">
+                    <MapPin className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Input Your Data</h3>
+                  <p className="text-muted-foreground">
+                    Share your location, farm size, and crop preferences (optional) 
+                    for personalized recommendations.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-forest rounded-2xl flex items-center justify-center">
+                    <Brain className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">AI Analysis</h3>
+                  <p className="text-muted-foreground">
+                    Our AI analyzes soil type, weather forecasts, seasonal patterns, 
+                    and historical crop performance data.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-sky rounded-2xl flex items-center justify-center">
+                    <TrendingUp className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Smart Recommendations</h3>
+                  <p className="text-muted-foreground">
+                    Receive top 3 crop recommendations with ROI predictions, 
+                    water requirements, and timing guidance.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* User Farms & AI Plans or Demo */}
       {user ? (
@@ -389,69 +391,73 @@ export default function AICropPlanning() {
         </section>
       )}
 
-      {/* Benefits */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            Why Choose AI Crop Planning?
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-earth rounded-full flex items-center justify-center">
-                <TrendingUp className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Save Money</h3>
-              <p className="text-muted-foreground">
-                Choose crops that thrive locally and reduce the risk of crop failure
-              </p>
-            </div>
+      {/* Benefits - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              Why Choose AI Crop Planning?
+            </h2>
             
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-forest rounded-full flex items-center justify-center">
-                <Star className="w-8 h-8 text-primary-foreground" />
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-earth rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Save Money</h3>
+                <p className="text-muted-foreground">
+                  Choose crops that thrive locally and reduce the risk of crop failure
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Maximize Yield</h3>
-              <p className="text-muted-foreground">
-                Get the highest possible ROI from your land investment
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-sky rounded-full flex items-center justify-center">
-                <Brain className="w-8 h-8 text-primary-foreground" />
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-forest rounded-full flex items-center justify-center">
+                  <Star className="w-8 h-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Maximize Yield</h3>
+                <p className="text-muted-foreground">
+                  Get the highest possible ROI from your land investment
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Reduce Trial & Error</h3>
-              <p className="text-muted-foreground">
-                Make data-driven decisions instead of guessing what might work
-              </p>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-sky rounded-full flex items-center justify-center">
+                  <Brain className="w-8 h-8 text-primary-foreground" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">Reduce Trial & Error</h3>
+                <p className="text-muted-foreground">
+                  Make data-driven decisions instead of guessing what might work
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* CTA */}
-      <section className="py-16 px-6 bg-gradient-earth">
-        <Card className="max-w-4xl mx-auto shadow-glow">
-          <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Ready to Plan Your Next Harvest?
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Join thousands of farmers who trust Bhoomi's AI to make smarter crop decisions. 
-              Start your free trial today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="harvest" size="lg">
-                Try the Crop Planner Now
-              </Button>
-              <Button variant="outline" size="lg">
-                Available on Bhoomi App
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      {/* CTA - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6 bg-gradient-earth">
+          <Card className="max-w-4xl mx-auto shadow-glow">
+            <CardContent className="p-8 text-center">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                Ready to Plan Your Next Harvest?
+              </h3>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Join thousands of farmers who trust Bhoomi's AI to make smarter crop decisions. 
+                Start your free trial today.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button variant="harvest" size="lg">
+                  Try the Crop Planner Now
+                </Button>
+                <Button variant="outline" size="lg">
+                  Available on Bhoomi App
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </div>
   );
 }

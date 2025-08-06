@@ -408,114 +408,118 @@ export default function RemoteMonitoring() {
         </>
       )}
 
-      {/* Features */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            Complete Farm Visibility
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-forest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Camera className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Live CCTV Feed</h3>
-                <p className="text-sm text-muted-foreground">
-                  High-quality cameras with zoom, timelapse, and night vision capabilities
-                </p>
-              </CardContent>
-            </Card>
+      {/* Features - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              Complete Farm Visibility
+            </h2>
             
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-sky rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Smartphone className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Drone Surveillance</h3>
-                <p className="text-sm text-muted-foreground">
-                  On-demand or scheduled aerial views of your entire farm
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-earth rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Thermometer className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Climate Monitoring</h3>
-                <p className="text-sm text-muted-foreground">
-                  Real-time temperature, humidity, and soil moisture data
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center hover:shadow-forest transition-all duration-300 group">
-              <CardContent className="p-6">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-harvest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
-                  <Bell className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">Smart Alerts</h3>
-                <p className="text-sm text-muted-foreground">
-                  Instant mobile notifications for any farm abnormalities
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-forest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Camera className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Live CCTV Feed</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Watch your farm in real-time from anywhere with HD cameras
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-sky rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Smartphone className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Mobile App Control</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Access your farm controls and alerts from your smartphone
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-earth rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Thermometer className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Climate Monitoring</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Real-time temperature, humidity, and soil moisture data
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="text-center hover:shadow-forest transition-all duration-300 group">
+                <CardContent className="p-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-harvest rounded-2xl flex items-center justify-center group-hover:animate-gentle-bounce">
+                    <Bell className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Smart Alerts</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Instant mobile notifications for any farm abnormalities
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Use Cases */}
-      <section className="py-16 px-6 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            Real-World Applications
-          </h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 mb-4 bg-gradient-forest rounded-xl flex items-center justify-center">
-                  <Droplets className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Irrigation Tracking</h3>
-                <p className="text-muted-foreground">
-                  Monitor if crops are being watered on time and verify irrigation schedules 
-                  are being followed correctly.
-                </p>
-              </CardContent>
-            </Card>
+      {/* Use Cases - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6 bg-muted/30">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              Real-World Applications
+            </h2>
             
-            <Card className="hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 mb-4 bg-gradient-earth rounded-xl flex items-center justify-center">
-                  <Eye className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Early Detection</h3>
-                <p className="text-muted-foreground">
-                  Spot pests, diseases, or livestock damage early before they spread 
-                  and cause significant crop loss.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-forest transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 mb-4 bg-gradient-sky rounded-xl flex items-center justify-center">
-                  <Camera className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Work Verification</h3>
-                <p className="text-muted-foreground">
-                  Check if field workers have completed their assigned tasks 
-                  and maintain quality standards.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 mb-4 bg-gradient-forest rounded-xl flex items-center justify-center">
+                    <Droplets className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Irrigation Tracking</h3>
+                  <p className="text-muted-foreground">
+                    Monitor if crops are being watered on time and verify irrigation schedules 
+                    are being followed correctly.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 mb-4 bg-gradient-earth rounded-xl flex items-center justify-center">
+                    <Eye className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Early Detection</h3>
+                  <p className="text-muted-foreground">
+                    Spot pests, diseases, or livestock damage early before they spread 
+                    and cause significant crop loss.
+                  </p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover:shadow-forest transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 mb-4 bg-gradient-sky rounded-xl flex items-center justify-center">
+                    <Camera className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Work Verification</h3>
+                  <p className="text-muted-foreground">
+                    Check if field workers have completed their assigned tasks 
+                    and maintain quality standards.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Testimonial */}
       <section className="py-16 px-6">
@@ -599,28 +603,30 @@ export default function RemoteMonitoring() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 px-6 bg-gradient-sky">
-        <Card className="max-w-4xl mx-auto shadow-glow">
-          <CardContent className="p-8 text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Experience Live Monitoring with Bhoomi
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Never miss a moment on your farm. Get complete visibility and control 
-              with our advanced monitoring technology.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="harvest" size="lg">
-                Schedule Live Demo
-              </Button>
-              <Button variant="outline" size="lg">
-                Get Monitoring System
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      {/* CTA - Only show for non-logged users */}
+      {!user && (
+        <section className="py-16 px-6 bg-gradient-sky">
+          <Card className="max-w-4xl mx-auto shadow-glow">
+            <CardContent className="p-8 text-center">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                Experience Live Monitoring with Bhoomi
+              </h3>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Never miss a moment on your farm. Get complete visibility and control 
+                with our advanced monitoring technology.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button variant="harvest" size="lg">
+                  Schedule Live Demo
+                </Button>
+                <Button variant="outline" size="lg">
+                  Get Monitoring System
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      )}
     </div>
   );
 }
