@@ -6,6 +6,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import SmartWaterControl from "@/components/SmartWaterControl";
+import DroneInformation from "@/components/DroneInformation";
 import { Camera, Smartphone, Thermometer, Droplets, Bell, Eye, ArrowRight, Play, Quote, Info,
          Video, Plane, AlertTriangle, CheckCircle, Clock, Wind } from "lucide-react";
 
@@ -367,6 +369,12 @@ export default function RemoteMonitoring() {
               </div>
             </div>
           )}
+
+          {/* New Features for Logged-in Users */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            <SmartWaterControl />
+            <DroneInformation />
+          </div>
         </div>
       ) : (
         /* Demo Content for non-logged in users */
@@ -602,6 +610,21 @@ export default function RemoteMonitoring() {
           </div>
         </div>
       </section>
+
+      {/* New Features for Demo Users */}
+      {!user && (
+        <section className="py-16 px-6">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+              Advanced Control & Automation Features
+            </h2>
+            <div className="grid lg:grid-cols-2 gap-8">
+              <SmartWaterControl />
+              <DroneInformation />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA - Only show for non-logged users */}
       {!user && (
