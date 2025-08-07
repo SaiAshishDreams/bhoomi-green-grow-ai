@@ -26,11 +26,12 @@ interface NavigationProps {
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home, public: true },
   { id: 'farms', label: 'My Farms', icon: Calendar, public: false },
+  { id: 'cluster-farming', label: 'Cluster Farming', icon: Users, public: true },
   { id: 'ai-planner', label: 'AI Planner', icon: Brain, public: true },
   { id: 'control', label: 'Control Panel', icon: Settings, public: true },
   { id: 'reports', label: 'Reports', icon: FileText, public: true },
-  { id: 'farmer-connect', label: 'Connect', icon: MessageCircle, public: true },
   { id: 'marketplace', label: 'Marketplace', icon: ShoppingCart, public: true },
+  { id: 'community', label: 'Community', icon: MessageCircle, public: true },
   { id: 'profile', label: 'Profile', icon: User, public: false },
 ];
 
